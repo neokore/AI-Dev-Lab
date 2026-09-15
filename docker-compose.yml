@@ -1,0 +1,30 @@
+services:
+  openchamber:
+    build:
+      context: ${OPENCHAMBER_SOURCE_DIR:-./openchamber}
+      dockerfile: Dockerfile
+    container_name: ${OPENCHAMBER_CONTAINER_NAME:-openchamber}
+    ports:
+      - "${OPENCHAMBER_BIND_ADDRESS:-127.0.0.1}:${OPENCHAMBER_PORT:-3000}:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ${OPENCHAMBER_CONFIG_DIR:-./data/openchamber}:/home/openchamber/.config/openchamber
+      - ${OPENCODE_SHARE_DIR:-./data/opencode/share}:/home/openchamber/.local/share/opencode
+      - ${OPENCODE_STATE_DIR:-./data/opencode/state}:/home/openchamber/.local/state/opencode
+      - ${OPENCODE_CONFIG_DIR:-./data/opencode/config}:/home/openchamber/.config/opencode
+      - ${OPENCHAMBER_SSH_DIR:-./data/ssh}:/home/openchamber/.ssh
+      - ${OPENCHAMBER_WORKSPACES_DIR:-./workspaces}:/home/openchamber/workspaces
+    environment:
+      OPENCHAMBER_UI_PASSWORD: ${OPENCHAMBER_UI_PASSWORD:?Set OPENCHAMBER_UI_PASSWORD in .env}
+      OPENCHAMBER_HOST: ${OPENCHAMBER_HOST:-0.0.0.0}
+      OPENCHAMBER_TUNNEL_PROVIDER: ${OPENCHAMBER_TUNNEL_PROVIDER:-}
+      OPENCHAMBER_TUNNEL_MODE: ${OPENCHAMBER_TUNNEL_MODE:-}
+      OPENCHAMBER_TUNNEL_HOSTNAME: ${OPENCHAMBER_TUNNEL_HOSTNAME:-}
+      OPENCHAMBER_TUNNEL_TOKEN: ${OPENCHAMBER_TUNNEL_TOKEN:-}
+      OPENCHAMBER_TUNNEL_CONFIG: ${OPENCHAMBER_TUNNEL_CONFIG:-}
+      OH_MY_OPENCODE: ${OH_MY_OPENCODE:-false}
+      OPENCODE_HOST: ${OPENCODE_HOST:-}
+      OPENCODE_SKIP_START: ${OPENCODE_SKIP_START:-}
+      OPENCHAMBER_OPENCODE_HOSTNAME: ${OPENCHAMBER_OPENCODE_HOSTNAME:-}
+    restart: unless-stopped

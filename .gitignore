@@ -1,0 +1,5 @@
+.env
+data/
+openchamber/
+workspaces/
+*.log
