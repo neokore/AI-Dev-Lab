@@ -1,0 +1,3 @@
+# Dokploy persists configuration and secrets on the host.
+/data/
+*.env
