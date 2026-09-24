@@ -8,7 +8,7 @@ services:
       - "${OPENCHAMBER_BIND_ADDRESS:-127.0.0.1}:${OPENCHAMBER_PORT:-3001}:3000"
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "forgejo.test:192.168.1.144"
+      - "${FORGEJO_DOMAIN:-forgejo.test}:${FORGEJO_IP:-127.0.0.1}"
     volumes:
       - ${OPENCHAMBER_CONFIG_DIR:-./data/openchamber}:/home/openchamber/.config/openchamber
       - ${OPENCODE_SHARE_DIR:-./data/opencode/share}:/home/openchamber/.local/share/opencode
